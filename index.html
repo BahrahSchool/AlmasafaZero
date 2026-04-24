@@ -17,18 +17,19 @@
             margin: 0; 
             overflow-x: hidden; 
         }
+        /* تعديل استجابة شريط الأخبار */
         .marquee-container { 
             width: 100%; 
             overflow: hidden; 
             background: #1e1b4b; 
-            height: 45px; 
+            height: 40px; 
             display: flex; 
             align-items: center; 
             position: relative; 
-            z-index: 10; 
+            z-index: 10;
         }
         @media (min-width: 768px) { .marquee-container { height: 54px; } }
-        
+
         .marquee-content { 
             display: flex; 
             white-space: nowrap; 
@@ -49,13 +50,13 @@
             display: flex; 
             align-items: center; 
             font-weight: 900; 
-            font-size: 12px; 
+            font-size: 11px; 
             box-shadow: -5px 0 15px rgba(0,0,0,0.3); 
         }
         @media (min-width: 768px) { 
             .news-badge { padding: 0 25px; font-size: 14px; box-shadow: -10px 0 20px rgba(0,0,0,0.5); }
         }
-        
+
         .custom-scrollbar::-webkit-scrollbar { width: 5px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .comment-bubble { background: #ffffff; border-radius: 12px; padding: 8px 12px; margin-bottom: 6px; border: 1px solid #f1f5f9; font-size: 12px; }
@@ -113,16 +114,15 @@
                     </div>
                 )}
                 <div className={`absolute top-0 left-6 md:left-10 ${p.mediaData ? 'mt-32 md:mt-40' : '-mt-6 md:-mt-8'} p-4 md:p-5 rounded-[1.5rem] md:rounded-[2rem] shadow-2xl z-20 border-4 border-white ${p.type === 'مسابقة' ? 'bg-amber-400 text-slate-900' : 'bg-indigo-600 text-white'}`}>
-                    <Icon name={p.type === 'مسابقة' ? "trophy" : "megaphone"} size={24} className="md:w-[30px] md:h-[30px]"/>
+                    <Icon name={p.type === 'مسابقة' ? "trophy" : "megaphone"} size={22} className="md:w-[30px] md:h-[30px]"/>
                 </div>
-
                 <div className="p-5 md:p-10 pt-12 md:pt-16 flex-1 flex flex-col font-black">
                     <h4 className="text-lg md:text-2xl font-black text-slate-900 mb-2 leading-tight">{p.title}</h4>
                     <div className="flex justify-between items-center mb-4 md:mb-6">
                         <p className={`text-[9px] md:text-[11px] font-black px-2 md:px-3 py-1 rounded-lg italic ${p.type === 'مسابقة' ? 'bg-amber-50 text-amber-700' : 'bg-indigo-50 text-indigo-700'}`}>بواسطة: {p.authorName || p.author || 'إيمان الحربي'}</p>
-                        <span className="text-[9px] md:text-[10px] font-bold text-slate-400">{p.createdAt ? new Date(p.createdAt).toLocaleDateString('ar-SA') : ''}</span>
+                        <span className="text-[9px] md:text-[10px] font-bold text-slate-400">{new Date(p.createdAt).toLocaleDateString('ar-SA')}</span>
                     </div>
-                    <p className="text-slate-600 text-xs md:text-sm flex-1 leading-relaxed mb-6 font-bold whitespace-pre-wrap">{p.content}</p>
+                    <p className="text-slate-600 text-xs md:text-sm flex-1 leading-relaxed mb-6 font-bold">{p.content}</p>
                     <div className="flex items-center gap-3 md:gap-4 mb-6 md:mb-8 bg-slate-50 w-fit px-3 md:px-4 py-1.5 md:py-2 rounded-xl md:rounded-2xl border shadow-inner font-black">
                         <button onClick={() => handleLike(p.id, p.likes || 0, p.dislikes || 0)} className={`flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-xl transition-all font-black ${userActions[p.id] === 'like' ? 'bg-emerald-50 text-emerald-600 border border-emerald-200' : 'text-slate-400 hover:bg-emerald-50'}`}><Icon name="thumbsUp" size={16} /> <span className="text-xs md:text-sm font-black">{formatNum(p.likes || 0)}</span></button>
                         <button onClick={() => handleDislike(p.id, p.likes || 0, p.dislikes || 0)} className={`flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-xl transition-all font-black ${userActions[p.id] === 'dislike' ? 'bg-rose-50 text-rose-600 border border-rose-200' : 'text-slate-400 hover:bg-rose-50'}`}><Icon name="thumbsDown" size={16} /> <span className="text-xs md:text-sm font-black">{formatNum(p.dislikes || 0)}</span></button>
@@ -131,15 +131,15 @@
                         <div className="space-y-2 mb-4 max-h-32 overflow-y-auto custom-scrollbar">
                             {(p.comments || []).map((c, i) => (
                                 <div key={i} className="comment-bubble shadow-sm">
-                                    <span className="text-[9px] md:text-[10px] font-black text-indigo-600 block mb-0.5">{c.author}</span>
-                                    <p className="text-slate-700 leading-relaxed text-[11px] md:text-xs font-bold">{c.text}</p>
+                                    <span className="text-[9px] md:text-[10px] font-black text-indigo-600 block mb-1 font-black">{c.author}</span>
+                                    <p className="text-slate-700 leading-relaxed text-[10px] md:text-xs font-bold">{c.text}</p>
                                 </div>
                             ))}
                         </div>
-                        <div className="relative">
+                        <div className="relative font-black">
                             <div className="flex gap-2 md:gap-3">
-                                <input className={`flex-1 bg-white border rounded-xl md:rounded-2xl px-4 md:px-5 py-2 md:py-3 text-xs md:text-sm outline-none focus:ring-2 shadow-sm text-right transition-all font-black ${(countChars(commentValue) > 40 || countNums(commentValue) > 10) ? 'border-rose-500 ring-rose-500' : 'border-slate-200 ring-amber-500'}`} placeholder="اكتب تعليقك..." value={commentValue || ""} onChange={(e) => onCommentChange(p.id, e.target.value)} />
-                                <button disabled={countChars(commentValue) > 40 || countNums(commentValue) > 10} onClick={() => onCommentSubmit(p.id)} className="bg-amber-500 text-white p-2 md:p-3.5 rounded-xl md:rounded-2xl shadow-lg hover:bg-slate-900 transition-all active:scale-95 disabled:bg-slate-300 font-black"><Icon name="send" size={16} /></button>
+                                <input className={`flex-1 bg-white border rounded-xl md:rounded-2xl px-3 md:px-5 py-2 md:py-3 text-[11px] md:text-sm outline-none focus:ring-2 shadow-sm text-right transition-all font-black ${(countChars(commentValue) > 40 || countNums(commentValue) > 10) ? 'border-rose-500 ring-rose-500' : 'border-slate-200 ring-amber-500'}`} placeholder="اكتب تعليقك..." value={commentValue || ""} onChange={(e) => onCommentChange(p.id, e.target.value)} />
+                                <button disabled={countChars(commentValue) > 40 || countNums(commentValue) > 10} onClick={() => onCommentSubmit(p.id)} className="bg-amber-500 text-white p-2 md:p-3.5 rounded-xl md:rounded-2xl shadow-lg hover:bg-slate-900 transition-all active:scale-95 disabled:bg-slate-300 font-black"><Icon name="send" size={16}/></button>
                             </div>
                         </div>
                     </div>
@@ -158,6 +158,11 @@
             const countChars = (str) => (str || "").replace(/\s/g, '').length;
             const countNums = (str) => ((str || "").match(/\d/g) || []).length;
             const formatNumbers = (num) => num >= 1000 ? (num/1000).toFixed(1) + 'k' : num;
+
+            const getDurationMs = (d) => {
+                const map = { 'يوم': 86400000, 'يومان': 172800000, '3 أيام': 259200000, 'أسبوع': 604800000, 'أسبوعين': 1209600000 };
+                return map[d] || Infinity;
+            };
 
             React.useEffect(() => {
                 const checkFB = setInterval(() => {
@@ -182,29 +187,46 @@
                 const { getFirestore, collection, onSnapshot } = window.FB;
                 const db = getFirestore();
                 const q = collection(db, 'artifacts', appId, 'public', 'data', 'posts');
+                
                 const unsubscribe = onSnapshot(q, (snapshot) => {
+                    const now = Date.now();
                     const fbPosts = snapshot.docs.map(d => ({id: d.id, ...d.data()}));
-                    setPosts(fbPosts.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)));
+                    const filtered = fbPosts.filter(p => {
+                        if (!p.duration || !p.createdAt) return true;
+                        const createdTime = new Date(p.createdAt).getTime();
+                        return (now - createdTime) < getDurationMs(p.duration);
+                    });
+                    setPosts(filtered.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)));
                 });
                 return () => unsubscribe();
             }, [user, isReady]);
 
             const handleLike = async (id, currentLikes, currentDislikes) => {
                 const { getFirestore, doc, updateDoc } = window.FB;
-                const postRef = doc(getFirestore(), 'artifacts', appId, 'public', 'data', 'posts', id);
-                let nextAction = userActions[id] === 'like' ? null : 'like';
-                let updates = { likes: nextAction === 'like' ? currentLikes + 1 : Math.max(0, currentLikes - 1) };
-                if (userActions[id] === 'dislike' && nextAction === 'like') updates.dislikes = Math.max(0, currentDislikes - 1);
-                try { await updateDoc(postRef, updates); setUserActions({...userActions, [id]: nextAction}); } catch(e) {}
+                const db = getFirestore();
+                const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', id);
+                let newLikes = currentLikes;
+                let newDislikes = currentDislikes;
+                let nextAction = 'like';
+                if (userActions[id] === 'like') { newLikes = Math.max(0, currentLikes - 1); nextAction = null; }
+                else if (userActions[id] === 'dislike') { newLikes = currentLikes + 1; newDislikes = Math.max(0, currentDislikes - 1); }
+                else { newLikes = currentLikes + 1; }
+                try { await updateDoc(postRef, { likes: newLikes, dislikes: newDislikes }); } catch(e) {}
+                setUserActions(prev => ({ ...prev, [id]: nextAction }));
             };
 
             const handleDislike = async (id, currentLikes, currentDislikes) => {
                 const { getFirestore, doc, updateDoc } = window.FB;
-                const postRef = doc(getFirestore(), 'artifacts', appId, 'public', 'data', 'posts', id);
-                let nextAction = userActions[id] === 'dislike' ? null : 'dislike';
-                let updates = { dislikes: nextAction === 'dislike' ? currentDislikes + 1 : Math.max(0, currentDislikes - 1) };
-                if (userActions[id] === 'like' && nextAction === 'dislike') updates.likes = Math.max(0, currentLikes - 1);
-                try { await updateDoc(postRef, updates); setUserActions({...userActions, [id]: nextAction}); } catch(e) {}
+                const db = getFirestore();
+                const postRef = doc(db, 'artifacts', appId, 'public', 'data', 'posts', id);
+                let newLikes = currentLikes;
+                let newDislikes = currentDislikes;
+                let nextAction = 'dislike';
+                if (userActions[id] === 'dislike') { newDislikes = Math.max(0, currentDislikes - 1); nextAction = null; }
+                else if (userActions[id] === 'like') { newDislikes = currentDislikes + 1; newLikes = Math.max(0, currentLikes - 1); }
+                else { newDislikes = currentDislikes + 1; }
+                try { await updateDoc(postRef, { likes: newLikes, dislikes: newDislikes }); } catch(e) {}
+                setUserActions(prev => ({ ...prev, [id]: nextAction }));
             };
 
             const handleComment = async (id) => {
@@ -213,25 +235,22 @@
                 const { getFirestore, doc, updateDoc, arrayUnion } = window.FB;
                 try {
                     await updateDoc(doc(getFirestore(), 'artifacts', appId, 'public', 'data', 'posts', id), {
-                        comments: arrayUnion({ author: "مبدعة من بحرة", text: text.trim(), createdAt: new Date().toISOString() })
+                        comments: arrayUnion({ author: "زائر", text: text.trim(), createdAt: new Date().toISOString() })
                     });
-                    setCommentInputs({...commentInputs, [id]: ""});
                 } catch(e) {}
+                setCommentInputs({...commentInputs, [id]: ""});
             };
 
-            const ads = posts.filter(p => p.type?.trim() === 'إعلان' || p.type?.trim() === 'إعلان عام');
-            const contests = posts.filter(p => p.type?.trim() === 'مسابقة');
-
-            if (!isReady) return <div className="h-screen flex items-center justify-center font-black text-indigo-600 bg-slate-50 animate-pulse">جاري الاتصال بـ المسافة صفر...</div>;
+            if (!isReady) return <div className="h-screen flex items-center justify-center font-black text-indigo-600 bg-slate-50 animate-pulse font-black">جاري الاتصال بـ المسافة صفر...</div>;
 
             return (
                 <div className="min-h-screen flex flex-col relative font-black">
-                    <header className="h-16 md:h-24 bg-white border-b px-4 md:px-8 flex items-center justify-between sticky top-0 z-[100] shadow-sm backdrop-blur-md bg-white/95">
+                    <header className="h-16 md:h-24 bg-white border-b px-4 md:px-8 flex items-center justify-between sticky top-0 z-[100] shadow-sm backdrop-blur-md bg-white/95 font-black">
                         <div className="flex items-center gap-3 md:gap-4 text-right">
                             <div className="bg-slate-950 p-2 md:p-3 rounded-xl shadow-xl"><Icon name="award" className="text-amber-400" size={22} /></div>
                             <div className="flex items-center gap-1.5 md:gap-2 font-black">
                                 <span className="text-lg md:text-2xl font-black text-slate-900 tracking-tighter">المسافة</span>
-                                <span className="bg-slate-950 text-amber-400 px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl text-[10px] md:text-xs uppercase tracking-widest font-black">صفر</span>
+                                <span className="bg-slate-950 text-amber-400 font-black px-2 py-0.5 md:px-3 md:py-1 rounded-lg md:rounded-xl text-[10px] md:text-xs uppercase tracking-widest">صفر</span>
                             </div>
                         </div>
                     </header>
@@ -239,13 +258,13 @@
                     <div className="bg-slate-900 text-white py-12 md:py-24 px-6 md:px-8 border-b-4 border-amber-500 relative overflow-hidden text-right font-black">
                         <div className="max-w-6xl mx-auto relative z-10 font-black">
                             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-amber-400 text-[9px] md:text-[10px] font-black uppercase mb-4 md:mb-6 tracking-widest font-black"><Icon name="sparkles" size={12} /> المنصة الإعلامية الرسمية</span>
-                            <h3 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 leading-tight">نصنع التميز، ونقرب <span className="text-amber-400">المسافات.</span></h3>
+                            <h3 className="text-2xl md:text-5xl font-black mb-4 md:mb-6 leading-tight font-black">نصنع التميز، ونقرب <span className="text-amber-400 font-black">المسافات.</span></h3>
                             <p className="text-slate-400 text-sm md:text-lg max-w-2xl leading-relaxed font-bold font-black">نافذة الإبداع والتواصل الرسمية لطالبات {schoolFullName}.</p>
                         </div>
                         <div className="marquee-container mt-10 md:mt-16 border-t border-white/10 font-black">
                             <div className="news-badge uppercase tracking-widest font-black">عاجل</div>
                             <div className="marquee-content font-black">
-                                {posts.length > 0 ? posts.map((p, i) => (<span key={i} className="mx-6 md:mx-12 text-[11px] md:text-sm font-medium flex items-center font-black"><span className="text-amber-400 ml-3 md:ml-4">●</span> {p.title}</span>)) : <span className="mx-12 text-sm font-black">مرحباً بكم في منصة المسافة صفر</span>}
+                                {posts.length > 0 ? posts.map((p, i) => (<span key={i} className="mx-6 md:mx-12 text-[11px] md:text-sm font-medium flex items-center font-black"><span className="text-amber-400 ml-3 md:ml-4 font-black">●</span> {p.title}</span>)) : <span className="mx-12 text-sm font-black">مرحباً بكم في منصة المسافة صفر</span>}
                             </div>
                         </div>
                     </div>
@@ -253,42 +272,45 @@
                     <main className="max-w-7xl mx-auto p-4 md:p-12 space-y-16 md:space-y-32 flex-1 w-full text-right font-black">
                         <section>
                             <h3 className="text-xl md:text-3xl font-black text-slate-900 border-r-4 md:border-r-8 border-indigo-600 pr-3 md:pr-5 mb-10 md:mb-20 uppercase font-black">أحدث الإعلانات</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 md:gap-y-24 gap-x-10">
-                                {ads.length > 0 ? (
-                                    ads.map(p => <PostCard key={p.id} p={p} userActions={userActions} handleLike={handleLike} handleDislike={handleDislike} commentValue={commentInputs[p.id]} onCommentChange={(id, v) => setCommentInputs({...commentInputs, [id]: v})} onCommentSubmit={handleComment} countChars={countChars} countNums={countNums} formatNum={formatNumbers} onZoom={setZoomMedia} />)
-                                ) : (
-                                    <p className="text-center col-span-full py-10 text-slate-300 font-black italic">لا توجد إعلانات حالياً.</p>
-                                )}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 md:gap-y-24 gap-x-10 font-black">
+                                {posts.filter(p => p.type?.trim() === 'إعلان' || p.type?.trim() === 'إعلان عام').map(p => (
+                                    <PostCard key={p.id} p={p} userActions={userActions} handleLike={handleLike} handleDislike={handleDislike} commentValue={commentInputs[p.id]} onCommentChange={(id, v) => setCommentInputs({...commentInputs, [id]: v})} onCommentSubmit={handleComment} countChars={countChars} countNums={countNums} formatNum={formatNumbers} onZoom={setZoomMedia} />
+                                ))}
+                                {posts.filter(p => p.type?.trim() === 'إعلان' || p.type?.trim() === 'إعلان عام').length === 0 && <p className="text-center col-span-full py-10 text-slate-300 font-black italic font-black">لا توجد إعلانات حالياً.</p>}
                             </div>
                         </section>
-                        
                         <section>
                             <h3 className="text-xl md:text-3xl font-black text-slate-900 border-r-4 md:border-r-8 border-amber-400 pr-3 md:pr-5 mb-10 md:mb-20 uppercase font-black">المسابقات</h3>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 md:gap-y-24 gap-x-10">
-                                {contests.length > 0 ? (
-                                    contests.map(p => <PostCard key={p.id} p={p} userActions={userActions} handleLike={handleLike} handleDislike={handleDislike} commentValue={commentInputs[p.id]} onCommentChange={(id, v) => setCommentInputs({...commentInputs, [id]: v})} onCommentSubmit={handleComment} countChars={countChars} countNums={countNums} formatNum={formatNumbers} onZoom={setZoomMedia} />)
-                                ) : (
-                                    <p className="text-center col-span-full py-10 text-slate-300 font-black italic">لا توجد مسابقات حالياً.</p>
-                                )}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-10 md:gap-y-24 gap-x-10 font-black">
+                                {posts.filter(p => p.type?.trim() === 'مسابقة').map(p => (
+                                    <PostCard key={p.id} p={p} userActions={userActions} handleLike={handleLike} handleDislike={handleDislike} commentValue={commentInputs[p.id]} onCommentChange={(id, v) => setCommentInputs({...commentInputs, [id]: v})} onCommentSubmit={handleComment} countChars={countChars} countNums={countNums} formatNum={formatNumbers} onZoom={setZoomMedia} />
+                                ))}
+                                {posts.filter(p => p.type?.trim() === 'مسابقة').length === 0 && <p className="text-center col-span-full py-10 text-slate-300 font-black italic font-black">لا توجد مسابقات حالياً.</p>}
                             </div>
                         </section>
                     </main>
 
                     <footer className="bg-slate-950 text-white py-10 px-6 mt-10 border-t-4 border-amber-500 text-center font-black">
                         <div className="max-w-7xl mx-auto space-y-3 font-black">
-                             <div className="flex items-center justify-center gap-3">
-                                <span className="text-xl md:text-2xl font-black tracking-tighter">المسافة <span className="text-amber-400">صفر</span></span>
+                             <div className="flex items-center justify-center gap-3 font-black">
+                                <span className="text-xl md:text-2xl font-black tracking-tighter font-black">المسافة <span className="text-amber-400 font-black">صفر</span></span>
                              </div>
-                             <p className="text-slate-400 text-xs md:text-sm font-bold">المنصة الإعلامية الرسمية لمدرسة {schoolFullName}</p>
-                             <p className="text-slate-500 text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em] pt-4">جميع الحقوق محفوظة © 2026</p>
+                             <p className="text-slate-400 text-xs md:text-sm font-bold font-black">المنصة الإعلامية الرسمية لمدرسة {schoolFullName}</p>
+                             <p className="text-slate-500 text-[10px] md:text-[11px] font-black uppercase tracking-[0.1em] pt-4 font-black">جميع الحقوق محفوظة © 2026</p>
                         </div>
                     </footer>
 
                     {zoomMedia && (
                         <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4 media-zoom-overlay font-black" onClick={() => setZoomMedia(null)}>
-                            <button className="absolute top-6 right-6 text-white bg-white/10 p-3 rounded-full"><Icon name="close" size={28} /></button>
-                            <div className="max-w-full w-full max-h-[85vh] flex items-center justify-center animate-in zoom-in-95 duration-300" onClick={e => e.stopPropagation()}>
-                                {zoomMedia.startsWith('data:video/') ? <video src={zoomMedia} controls autoPlay className="max-w-full max-h-[85vh] rounded-2xl shadow-2xl border-2 border-white/20 font-black" /> : <img src={zoomMedia} className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border-2 border-white/20 font-black" />}
+                            <button className="absolute top-6 right-6 text-white bg-white/10 p-3 rounded-full font-black">
+                                <Icon name="close" size={28} />
+                            </button>
+                            <div className="max-w-full w-full max-h-[85vh] flex items-center justify-center animate-in zoom-in-95 duration-300 font-black" onClick={e => e.stopPropagation()}>
+                                {zoomMedia.startsWith('data:video/') ? (
+                                    <video src={zoomMedia} controls autoPlay className="max-w-full max-h-[85vh] rounded-2xl shadow-2xl border-2 border-white/20 font-black" />
+                                ) : (
+                                    <img src={zoomMedia} className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border-2 border-white/20 font-black" />
+                                )}
                             </div>
                         </div>
                     )}
